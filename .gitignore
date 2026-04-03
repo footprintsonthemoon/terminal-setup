@@ -1,0 +1,7 @@
+.DS_Store
+**/.DS_Store
+*.log
+.cache/
+lazy-lock.json
+
+streamdeck/config.sh
