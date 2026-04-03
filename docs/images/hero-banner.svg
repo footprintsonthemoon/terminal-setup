@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="420" viewBox="0 0 1600 420" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="420" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11111b"/>
+      <stop offset="1" stop-color="#1e1e2e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="180" y1="90" x2="1420" y2="330" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#89b4fa"/>
+      <stop offset="0.35" stop-color="#cba6f7"/>
+      <stop offset="0.7" stop-color="#fab387"/>
+      <stop offset="1" stop-color="#a6e3a1"/>
+    </linearGradient>
+    <filter id="blur" x="0" y="0" width="1600" height="420" filterUnits="userSpaceOnUse">
+      <feGaussianBlur stdDeviation="45"/>
+    </filter>
+  </defs>
+  <rect width="1600" height="420" rx="28" fill="url(#bg)"/>
+  <g filter="url(#blur)" opacity="0.35">
+    <circle cx="260" cy="110" r="120" fill="#89b4fa"/>
+    <circle cx="790" cy="70" r="130" fill="#cba6f7"/>
+    <circle cx="1290" cy="300" r="160" fill="#fab387"/>
+  </g>
+  <rect x="78" y="78" width="1444" height="264" rx="22" fill="#181825" stroke="#313244"/>
+  <text x="122" y="165" fill="#cdd6f4" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="56" font-weight="700">Terminal Setup</text>
+  <text x="124" y="214" fill="#a6adc8" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="24">tmux · Neovim · Starship · Stream Deck</text>
+  <text x="124" y="266" fill="#bac2de" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22">Keyboard-first · Symlink-based · Catppuccin-styled · Reproducible</text>
+  <g transform="translate(980 118)">
+    <rect width="410" height="150" rx="16" fill="#1e1e2e" stroke="#45475a"/>
+    <rect x="0" y="0" width="410" height="28" rx="16" fill="#313244"/>
+    <circle cx="22" cy="14" r="5" fill="#f38ba8"/>
+    <circle cx="40" cy="14" r="5" fill="#f9e2af"/>
+    <circle cx="58" cy="14" r="5" fill="#a6e3a1"/>
+    <text x="18" y="60" fill="#89b4fa" font-family="JetBrains Mono, Menlo, monospace" font-size="18">❯ tmux attach -t main</text>
+    <text x="18" y="92" fill="#a6e3a1" font-family="JetBrains Mono, Menlo, monospace" font-size="18">❯ nvim</text>
+    <text x="18" y="124" fill="#f5c2e7" font-family="JetBrains Mono, Menlo, monospace" font-size="18">❯ &lt;leader&gt;e  # Neo-tree</text>
+  </g>
+  <rect x="123" y="300" width="250" height="18" rx="9" fill="url(#accent)" opacity="0.95"/>
+</svg>

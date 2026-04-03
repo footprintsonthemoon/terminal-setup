@@ -1,359 +1,238 @@
-# Terminal Setup
+# ⚡ Terminal Setup
 
-A modular macOS terminal workflow built around **iTerm2**, **tmux**, **Starship**, **Neovim**, and **Stream Deck**.
+![macOS](https://img.shields.io/badge/macOS-compatible-blue?logo=apple)
+![Neovim](https://img.shields.io/badge/Neovim-0.12%2B-green?logo=neovim)
+![tmux](https://img.shields.io/badge/tmux-workflow-informational?logo=tmux)
+![Starship](https://img.shields.io/badge/Starship-prompt-yellow?logo=starship)
+![Theme](https://img.shields.io/badge/theme-catppuccin-mocha?color=1e1e2e)
+![Workflow](https://img.shields.io/badge/workflow-keyboard--first-orange)
 
-This repository documents both the configuration and the workflow philosophy behind the setup. The goal is a fast, keyboard-first environment with reliable pane and window management, a clean prompt, a focused editor, and optional hardware shortcuts through Stream Deck.
+**Repository description:** Keyboard-first terminal setup with tmux, Neovim, Starship and hardware integration (Stream Deck, Dygma and Monogram).
 
-## Overview
+---
 
-The setup is built around five layers:
+![Terminal Setup Banner](docs/images/hero-banner.svg)
 
-- **iTerm2** as the terminal UI
-- **tmux** as the session and workspace backbone
-- **Starship** as the shell prompt
-- **Neovim** as the editor and navigator
-- **Stream Deck** as an optional control surface for tmux actions
+---
 
-The result is a workflow where tmux manages long-lived sessions, Neovim handles editing and navigation, Starship provides compact context, and Stream Deck exposes frequent tmux operations as dedicated buttons.
+## 🚀 A Keyboard-First Development Environment
 
-## Repository Structure
+A modular, hardware-accelerated development environment built around:
 
-```text
-terminal-setup/
-├── README.md
-├── .gitignore
-├── bootstrap.sh
-├── docs/
-│   └── images/
-├── iterm2/
-│   └── README.md
-├── nvim/
-│   └── config/
-├── starship/
-│   └── starship.toml
-├── streamdeck/
-│   ├── README.md
-│   └── scripts/
-└── tmux/
-    └── .tmux.conf
-```
+- **tmux** for session and workflow management
+- **Neovim** for editing and navigation
+- **Starship** for contextual feedback
+- **Stream Deck, Dygma and Monogram** for physical interaction
 
-## Core Components
+This repository is not just configuration — it is a **complete workflow system**.
 
-### tmux
+---
 
-The tmux configuration uses `Ctrl-a` as prefix, keeps pane and window indexing 1-based, enables mouse support, uses vi-style copy mode, and preserves the current path when splitting panes.
+## 🧭 Architecture
 
-Highlights:
+![architecture diagram](docs/images/architecture-diagram.svg)
 
-- `Ctrl-a` prefix instead of the default `Ctrl-b`
-- pane navigation on `Ctrl-h/j/k/l`
-- window navigation on `Alt-h` and `Alt-l`
-- pane resizing on prefix + `H/J/K/L`
-- top pane borders with pane titles
-- clipboard integration on macOS through `pbcopy`
-- TPM plugins for sensible defaults and session restore
+The architecture is intentionally layered:
 
-The tmux config is stored in `tmux/.tmux.conf`.
+- **Hardware layer** for fast, repeatable control
+- **tmux layer** for orchestration, layouts and local/remote context
+- **Neovim layer** for navigation, editing and review
+- **Prompt / file visibility layer** for context and quick recognition
 
-### Starship
+---
 
-The prompt uses a Catppuccin Mocha-inspired palette and stays intentionally compact. It shows:
+## 🎨 Visual System
 
-- operating system icon
-- current directory
-- git branch and status
-- language/runtime information when relevant
-- command duration
-- prompt mode indicators
-- an optional `PANE_ROLE` environment variable for pane-specific context
+This setup follows a **semantic color model**:
 
-This is especially useful in combination with tmux panes that represent different roles such as local shell, Claude, or SSH.
+| Element | Meaning |
+|--------|--------|
+| Peach prompt | Local machine |
+| Mauve prompt | Remote server |
+| Blue (eza) | Directories |
+| Cyan (eza) | Symlinks |
+| Green (eza) | Executables |
+| Grey (eza) | Files |
 
-The Starship config is stored in `starship/starship.toml`. fileciteturn1file0L1-L26
+**Principle:**
 
-### Neovim
+- Prompt color → *Where you are*
+- File colors → *What you are looking at*
 
-Neovim is configured in a modular structure under `nvim/config` and currently includes:
+---
 
-- `lazy.nvim` for plugin management
-- `catppuccin` for colors
-- `telescope.nvim` for navigation and search
-- `nvim-treesitter` for syntax awareness
-- `neo-tree` for a file explorer
-- `lualine.nvim` for a minimal statusline
-- `which-key.nvim` for discoverable keybindings
-- `render-markdown.nvim` for Markdown rendering
+## ⌨️ Hardware Integration
 
-Useful conventions in the current setup:
+### Full Setup
+![hardware setup](docs/images/hardware-setup.png)
 
-- `Space` is the leader key
-- `Ctrl-p` opens Telescope file search
-- `Space fg` starts project grep
-- `Space fc` searches the Neovim config
-- `Space e` toggles Neo-tree
-- `Space o` focuses Neo-tree
-- `Space w` switches between Neo-tree and the editor
+### Stream Deck Detail
+![stream deck](docs/images/streamdeck-close.png)
 
-### Stream Deck
+This setup combines multiple input layers:
 
-The Stream Deck integration is based on shell scripts instead of raw keypress emulation.
+- **Stream Deck** → triggers workflows such as tmux layouts, SSH splits and launcher actions
+- **Dygma Keyboard** → layer-based input system
+- **Monogram Console** → additional physical controls
 
-That has two main advantages:
+### Companion Project
 
-- actions are explicit and reproducible
-- tmux can be controlled directly without depending on the active application state
+👉 https://github.com/footprintsonthemoon/dygma_profile_switcher
 
-The included scripts cover actions such as:
+---
 
-- pane navigation
-- pane splitting
-- pane zoom
-- new windows
-- next and previous window
-- detach session
-- choose session
-- reload tmux config
-- toggle mouse mode
-- enter copy mode
+## 🖥️ Interface
 
-There are also higher-level launcher scripts for prebuilt pane layouts:
+### Terminal (Starship + eza)
+![terminal](docs/images/terminal.png)
 
-- `tmux-shell-ssh.sh` creates a local shell + remote SSH layout
-- `tmux-claude-ssh.sh` creates a Claude + remote SSH layout
-- `launch-shell.sh` launches iTerm2 and attaches to the `main` tmux session
-- `launch-claude.sh` does the same for the Claude-oriented layout
+### tmux (local + remote)
+![tmux](docs/images/tmux.png)
 
-The scripts live in `streamdeck/scripts/`.
+### Neovim (Neo-tree + editing)
+![nvim](docs/images/nvim.png)
 
-## Installation
+### Telescope (navigation)
+![telescope](docs/images/telescope.png)
 
-### Prerequisites
+---
 
-This setup assumes:
+## 📁 File Visualization
 
-- macOS
-- Homebrew
-- iTerm2
-- a Nerd Font for icons
-- a shell that loads Starship, such as zsh or bash
+The default macOS `ls` is replaced by **eza**.
 
-### Install core tools
+### Included shell setup
+
+The bootstrap script adds the following to your shell config automatically:
 
 ```bash
-brew install neovim tmux starship git ripgrep fd tree-sitter-cli
+export EZA_COLORS="di=38;5;111:ln=38;5;117:ex=38;5;150:fi=38;5;252:so=38;5;176:pi=38;5;222:bd=38;5;222;1:cd=38;5;222;1"
+
+alias ls="eza -a --icons=auto --group-directories-first"
+alias ll="eza -alh --icons=auto --group-directories-first --git"
+alias la="eza -alh --icons=auto --group-directories-first --git"
+alias lt="eza --tree -a --level=2 --icons=auto"
 ```
 
-### Clone the repository
+This keeps file type recognition separate from machine context:
+
+- **Starship prompt colors** tell you where you are
+- **eza colors** tell you what kind of file you are looking at
+
+---
+
+## 🧱 System Layers
+
+| Layer | Tool | Role |
+|------|------|------|
+| UI | iTerm2 | terminal environment |
+| Session | tmux | layout & orchestration |
+| Editor | Neovim | editing & navigation |
+| Prompt | Starship | context awareness |
+| File view | eza | file type visibility |
+| Control | Stream Deck | execution layer |
+| Input | Dygma | abstraction layer |
+
+---
+
+## 🧭 Core Workflows
+
+### Navigation
+- `<C-p>` → find files
+- `<leader>fg` → search content
+- `<leader>e` → file explorer
+
+### Window Management
+- `Ctrl + h/j/k/l` → move between panes
+- `Alt + h/l` → switch windows
+
+### Hardware
+- Stream Deck → start workflows
+- Dygma → switch input layers
+
+---
+
+## 🚀 Installation
 
 ```bash
-git clone <your-repo-url>
+git clone git@github.com:footprintsonthemoon/terminal-setup.git
 cd terminal-setup
-```
-
-### Run the bootstrap script
-
-```bash
 ./bootstrap.sh
 ```
 
-This script:
+---
 
-- installs core packages with Homebrew
-- creates required config directories
-- links Neovim, tmux, and Starship configs into the expected locations
+## ⚙️ What `bootstrap.sh` does
 
-### Enable Starship in your shell
+The bootstrap script is intended to make the setup reproducible on a fresh machine.
 
-For zsh:
+It will:
 
-```bash
-echo 'eval "$(starship init zsh)"' >> ~/.zshrc
-```
+- install required Homebrew packages:
+  - `git`
+  - `neovim`
+  - `tmux`
+  - `starship`
+  - `ripgrep`
+  - `fd`
+  - `tree-sitter-cli`
+  - `eza`
+- create required config directories
+- create symlinks for:
+  - `~/.config/nvim`
+  - `~/.tmux.conf`
+  - `~/.config/starship.toml`
+- append a Starship init block to your shell config
+- append the `eza` aliases and colors to your shell config
 
-For bash:
+The script detects your shell and updates either:
 
-```bash
-echo 'eval "$(starship init bash)"' >> ~/.bashrc
-```
+- `~/.zshrc`
+- or `~/.bashrc`
 
-Then reload your shell.
+---
 
-### Install tmux plugins
-
-Start tmux, then press:
+## 🔗 Symlink Strategy
 
 ```text
-Prefix + I
+~/.config/nvim          → nvim/config
+~/.tmux.conf            → tmux/.tmux.conf
+~/.config/starship.toml → starship/starship.toml
 ```
 
-In this setup, the prefix is:
+This repository stays the **single source of truth**. System paths point to the repo instead of containing copied files.
 
-```text
-Ctrl-a
-```
+---
 
-This installs the TPM-managed plugins declared in `.tmux.conf`.
-
-### Finalize Neovim
-
-Open Neovim and run:
-
-```vim
-:Lazy sync
-:TSUpdate
-```
-
-## Configuration Locations
-
-This repository keeps the source files in the project itself and links them into the usual runtime locations.
-
-Resulting locations:
-
-- Neovim: `~/.config/nvim`
-- tmux: `~/.config/tmux/tmux.conf`
-- Starship: `~/.config/starship.toml`
-
-The repository itself can live anywhere on disk. No absolute path is required.
-
-
-### Stream Deck configuration file
-
-The public version of this repository does not hardcode any personal hostnames or absolute paths in the Stream Deck scripts.
-
-Instead, copy the example file and adapt it locally:
+## 🔁 Updates
 
 ```bash
-cp streamdeck/config.example.sh streamdeck/config.sh
-```
-
-Then edit:
-
-- `STREAMDECK_REMOTE_HOST`
-- `STREAMDECK_REMOTE_DIR`
-- `STREAMDECK_CLAUDE_CMD`
-- `STREAMDECK_TMUX_SESSION`
-- `STREAMDECK_ITERM_PROFILE`
-
-`streamdeck/config.sh` should stay untracked if you want to keep machine-specific values private.
-
-## Updating
-
-### Homebrew packages
-
-```bash
-brew update
 brew upgrade
 ```
 
-### tmux plugins
-
-Inside tmux:
-
-```text
-Prefix + U
-```
-
-### Neovim plugins
-
 Inside Neovim:
 
 ```vim
 :Lazy sync
-```
-
-### Treesitter parsers
-
-Inside Neovim:
-
-```vim
 :TSUpdate
 ```
 
-## Daily Workflow
+tmux:
 
-A typical work session looks like this:
+```text
+Prefix + r
+```
 
-1. Open iTerm2
-2. Attach or create the `main` tmux session
-3. Use tmux windows for different tasks or projects
-4. Use Neovim for editing and project navigation
-5. Use Telescope for file search and grep
-6. Use Neo-tree when a project structure view is helpful
-7. Optionally use Stream Deck buttons for pane, window, or session actions
+---
 
-The setup is intentionally split between:
+## 🧠 Philosophy
 
-- **tmux** for session and layout persistence
-- **Neovim** for editing and in-project navigation
-- **Stream Deck** for fast access to repeated tmux actions
+> Reduce friction. Increase flow.
 
-## Stream Deck Notes
+This setup aligns tools, visuals and hardware into a single coherent system.
 
-The included shell scripts are intended as examples and working utilities, but some values are machine-specific and should be reviewed before publishing or reusing them broadly.
+---
 
-In particular, check:
+## 📄 License
 
-- remote host names
-- remote directories
-- tmux session names if you do not use `main`
-- optional iTerm2 profile names
-- any environment-specific commands such as `claude`
-
-The launcher scripts in this repository resolve their own directory dynamically and can optionally read machine-specific values from `streamdeck/config.sh`.
-
-## iTerm2 Notes
-
-The repository does not yet include an exported iTerm2 profile. The `iterm2/` directory is reserved for future additions such as:
-
-- profile exports
-- screenshots
-- notes on triggers or profile switching
-- color settings
-
-## Keybindings Cheat Sheet
-
-### tmux
-
-- prefix: `Ctrl-a`
-- send prefix: `Ctrl-a Ctrl-a`
-- pane move: `Ctrl-h/j/k/l`
-- previous and next window: `Alt-h`, `Alt-l`
-- resize pane: `Prefix + H/J/K/L`
-- copy mode: `Prefix + [`
-- reload config: `Prefix + r`
-
-### Neovim
-
-- file search: `Ctrl-p`
-- grep: `Space fg`
-- search Neovim config: `Space fc`
-- search home directory: `Space fh`
-- toggle Neo-tree: `Space e`
-- focus Neo-tree: `Space o`
-- switch between Neo-tree and editor: `Space w`
-- toggle Markdown rendering: `Space mr`
-
-## Design Principles
-
-This setup follows a few consistent rules:
-
-- **Modular:** each tool has its own directory and config
-- **Portable:** no repository path is assumed in the documentation
-- **Fast:** quick navigation through Telescope and tmux keybindings
-- **Readable:** clean prompt, restrained statuslines, and a simple color story
-- **Practical:** Stream Deck scripts call tmux directly instead of emulating keystrokes
-
-## Future Improvements
-
-Possible next steps for this repository:
-
-- add exported iTerm2 profiles
-- add screenshots under `docs/images`
-- add LSP and formatter configuration for Neovim
-- add a `Makefile` for install and update tasks
-- document Stream Deck button layouts visually
-
-## License
-
-Use, adapt, and extend this setup as needed.
+MIT

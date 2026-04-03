@@ -49,8 +49,10 @@ format = '[ $user]($style)'
 [directory]
 style = "bg:peach fg:crust"
 format = "[ $path ]($style)"
-truncation_length = 10
-truncation_symbol = "…/"
+
+truncation_length = 0
+truncate_to_repo = false
+fish_style_pwd_dir_length = 0
 
 [directory.substitutions]
 "Documents" = "󰈙 "

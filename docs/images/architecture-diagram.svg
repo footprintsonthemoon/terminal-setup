@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" fill="none">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1600" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#11111b"/>
+      <stop offset="1" stop-color="#1e1e2e"/>
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1600" height="900" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="10" stdDeviation="16" flood-color="#000000" flood-opacity="0.25"/>
+    </filter>
+    <style>
+      .title { font: 700 40px Inter, Segoe UI, Arial, sans-serif; fill: #cdd6f4; }
+      .subtitle { font: 400 20px Inter, Segoe UI, Arial, sans-serif; fill: #a6adc8; }
+      .label { font: 700 22px Inter, Segoe UI, Arial, sans-serif; fill: #11111b; }
+      .small { font: 400 18px Inter, Segoe UI, Arial, sans-serif; fill: #45475a; }
+      .pill { font: 600 18px Inter, Segoe UI, Arial, sans-serif; fill: #11111b; }
+      .footer { font: 500 18px Inter, Segoe UI, Arial, sans-serif; fill: #bac2de; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" rx="32" fill="url(#bg)"/>
+
+  <text x="86" y="96" class="title">Terminal Setup Architecture</text>
+  <text x="86" y="132" class="subtitle">Hardware-assisted, keyboard-first workflow system built around tmux, Neovim and Starship</text>
+
+  <!-- hardware row -->
+  <g filter="url(#shadow)">
+    <rect x="90" y="190" width="300" height="132" rx="24" fill="#fab387"/>
+    <text x="120" y="238" class="label">Stream Deck</text>
+    <text x="120" y="275" class="small">workflow triggers</text>
+
+    <rect x="430" y="190" width="300" height="132" rx="24" fill="#cba6f7"/>
+    <text x="460" y="238" class="label">Dygma Keyboard</text>
+    <text x="460" y="275" class="small">dynamic input layers</text>
+
+    <rect x="770" y="190" width="300" height="132" rx="24" fill="#89b4fa"/>
+    <text x="800" y="238" class="label">iTerm2</text>
+    <text x="800" y="275" class="small">terminal interface</text>
+
+    <rect x="1110" y="190" width="300" height="132" rx="24" fill="#a6e3a1"/>
+    <text x="1140" y="238" class="label">Monogram Console</text>
+    <text x="1140" y="275" class="small">additional hardware control</text>
+  </g>
+
+  <!-- arrows down to tmux -->
+  <g stroke="#7f849c" stroke-width="4" stroke-linecap="round">
+    <path d="M240 322 V384"/>
+    <path d="M580 322 V384"/>
+    <path d="M920 322 V384"/>
+    <path d="M1260 322 V384"/>
+  </g>
+
+  <!-- tmux layer -->
+  <g filter="url(#shadow)">
+    <rect x="320" y="392" width="960" height="148" rx="28" fill="#313244" stroke="#45475a"/>
+    <text x="360" y="446" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#cdd6f4">tmux</text>
+    <text x="360" y="486" class="subtitle">session orchestration · panes · local/remote split layouts · repeatable workflows</text>
+
+    <rect x="360" y="505" width="190" height="28" rx="14" fill="#89b4fa"/>
+    <text x="390" y="525" class="pill">sessions</text>
+
+    <rect x="568" y="505" width="170" height="28" rx="14" fill="#fab387"/>
+    <text x="600" y="525" class="pill">layouts</text>
+
+    <rect x="754" y="505" width="154" height="28" rx="14" fill="#cba6f7"/>
+    <text x="782" y="525" class="pill">remote</text>
+
+    <rect x="924" y="505" width="162" height="28" rx="14" fill="#a6e3a1"/>
+    <text x="952" y="525" class="pill">automation</text>
+
+    <rect x="1102" y="505" width="132" height="28" rx="14" fill="#f9e2af"/>
+    <text x="1131" y="525" class="pill">copy-mode</text>
+  </g>
+
+  <!-- arrows from tmux to bottom two -->
+  <g stroke="#7f849c" stroke-width="4" stroke-linecap="round">
+    <path d="M640 540 V610"/>
+    <path d="M960 540 V610"/>
+  </g>
+
+  <!-- bottom row -->
+  <g filter="url(#shadow)">
+    <rect x="150" y="620" width="560" height="180" rx="28" fill="#181825" stroke="#45475a"/>
+    <text x="190" y="676" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#cdd6f4">Neovim</text>
+    <text x="190" y="716" class="subtitle">editing · search · structure · markdown review</text>
+
+    <rect x="190" y="739" width="170" height="28" rx="14" fill="#89b4fa"/>
+    <text x="224" y="759" class="pill">Telescope</text>
+
+    <rect x="376" y="739" width="160" height="28" rx="14" fill="#fab387"/>
+    <text x="411" y="759" class="pill">Neo-tree</text>
+
+    <rect x="552" y="739" width="110" height="28" rx="14" fill="#cba6f7"/>
+    <text x="582" y="759" class="pill">LSP</text>
+
+    <rect x="190" y="778" width="238" height="28" rx="14" fill="#a6e3a1"/>
+    <text x="224" y="798" class="pill">render-markdown</text>
+
+    <rect x="445" y="778" width="170" height="28" rx="14" fill="#f9e2af"/>
+    <text x="480" y="798" class="pill">which-key</text>
+
+    <rect x="888" y="620" width="560" height="180" rx="28" fill="#181825" stroke="#45475a"/>
+    <text x="928" y="676" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="34" font-weight="700" fill="#cdd6f4">Starship + eza</text>
+    <text x="928" y="716" class="subtitle">prompt context · semantic colors · file visibility</text>
+
+    <rect x="928" y="739" width="210" height="28" rx="14" fill="#fab387"/>
+    <text x="963" y="759" class="pill">local = peach</text>
+
+    <rect x="1156" y="739" width="214" height="28" rx="14" fill="#cba6f7"/>
+    <text x="1192" y="759" class="pill">remote = mauve</text>
+
+    <rect x="928" y="778" width="166" height="28" rx="14" fill="#89b4fa"/>
+    <text x="960" y="798" class="pill">dirs = blue</text>
+
+    <rect x="1110" y="778" width="150" height="28" rx="14" fill="#74c7ec"/>
+    <text x="1139" y="798" class="pill">links = cyan</text>
+
+    <rect x="1276" y="778" width="140" height="28" rx="14" fill="#a6e3a1"/>
+    <text x="1306" y="798" class="pill">exec = green</text>
+  </g>
+
+  <text x="86" y="852" class="footer">Hardware inputs drive tmux. tmux anchors the workflow. Neovim and Starship/eza provide editing, navigation and context.</text>
+</svg>
