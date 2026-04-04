@@ -5,16 +5,15 @@ set -euo pipefail
 DOTFILES_DIR="$(cd "$(dirname "$0")" && pwd)"
 SHELL_RC=""
 
-log() {
-  printf "\n==> %s\n" "$1"
-}
+log() { printf "\n==> %s\n" "$1"; }
+success() { printf "   ✓ %s\n" "$1"; }
+warn() { printf "   ! %s\n" "$1"; }
 
-success() {
-  printf "   ✓ %s\n" "$1"
-}
-
-warn() {
-  printf "   ! %s\n" "$1"
+ask_yes_no() {
+  local prompt="$1"
+  local reply
+  read -r -p "$prompt [y/N]: " reply
+  [[ "$reply" =~ ^[Yy]$ ]]
 }
 
 detect_shell_rc() {
@@ -22,12 +21,8 @@ detect_shell_rc() {
   shell_name="$(basename "${SHELL:-}")"
 
   case "$shell_name" in
-    zsh)
-      SHELL_RC="$HOME/.zshrc"
-      ;;
-    bash)
-      SHELL_RC="$HOME/.bashrc"
-      ;;
+    zsh) SHELL_RC="$HOME/.zshrc" ;;
+    bash) SHELL_RC="$HOME/.bashrc" ;;
     *)
       if [ -f "$HOME/.zshrc" ]; then
         SHELL_RC="$HOME/.zshrc"
@@ -39,12 +34,19 @@ detect_shell_rc() {
 }
 
 ensure_homebrew() {
-  if ! command -v brew >/dev/null 2>&1; then
-    warn "Homebrew is not installed."
-    warn "Please install Homebrew first: https://brew.sh"
+  if command -v brew >/dev/null 2>&1; then
+    success "Homebrew found"
+    return
+  fi
+
+  warn "Homebrew is not installed."
+  if ask_yes_no "Install Homebrew now?"; then
+    /bin/bash -c "$(curl -fsSL https://brew.sh)"
+    success "Homebrew installed"
+  else
+    warn "Homebrew is required for this bootstrap script."
     exit 1
   fi
-  success "Homebrew found"
 }
 
 install_package() {
@@ -57,13 +59,23 @@ install_package() {
   fi
 }
 
+install_cask() {
+  local cask="$1"
+  if brew list --cask "$cask" >/dev/null 2>&1; then
+    success "$cask already installed"
+  else
+    log "Installing $cask"
+    brew install --cask "$cask"
+  fi
+}
+
 ensure_dir() {
   local dir="$1"
   mkdir -p "$dir"
   success "Ensured directory $dir"
 }
 
-link_file() {
+link_path() {
   local source_path="$1"
   local target_path="$2"
 
@@ -100,10 +112,10 @@ append_block_once() {
 }
 
 main() {
-  log "Checking Homebrew"
+  log "Checking prerequisites"
   ensure_homebrew
 
-  log "Installing core tools"
+  log "Installing required packages"
   install_package git
   install_package neovim
   install_package tmux
@@ -112,15 +124,20 @@ main() {
   install_package fd
   install_package tree-sitter-cli
   install_package eza
+  install_package make
 
-  log "Creating config directories"
+  log "Installing recommended apps and fonts"
+  brew tap homebrew/cask-fonts >/dev/null 2>&1 || true
+  install_cask iterm2
+  install_cask font-jetbrains-mono-nerd-font
+
+  log "Preparing directories"
   ensure_dir "$HOME/.config"
-  ensure_dir "$HOME/.config/tmux"
 
   log "Creating symlinks"
-  link_file "$DOTFILES_DIR/nvim/config" "$HOME/.config/nvim"
-  link_file "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
-  link_file "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
+  link_path "$DOTFILES_DIR/nvim/config" "$HOME/.config/nvim"
+  link_path "$DOTFILES_DIR/tmux/.tmux.conf" "$HOME/.tmux.conf"
+  link_path "$DOTFILES_DIR/starship/starship.toml" "$HOME/.config/starship.toml"
 
   detect_shell_rc
   log "Updating shell config in $SHELL_RC"
@@ -147,8 +164,9 @@ alias lt="eza --tree -a --level=2 --icons=auto"'
   log "Bootstrap complete"
   printf "\nNext steps:\n"
   printf "  1. Restart your shell or run: source %s\n" "$SHELL_RC"
-  printf "  2. Start Neovim and run: :Lazy sync\n"
-  printf "  3. Then run: :TSUpdate\n"
+  printf "  2. Open iTerm2 and set the font to JetBrainsMono Nerd Font\n"
+  printf "  3. Start Neovim and run: :Lazy sync\n"
+  printf "  4. Then run: :TSUpdate\n"
 }
 
 main "$@"
